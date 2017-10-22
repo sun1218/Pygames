@@ -94,8 +94,8 @@ class Trivia(object):
             screen.fill((20,30,40))            
 
             print_text(font1, 200, 170, 'ANSWERS',yellow)
-            print_text(font2, 300, 210, 'y - again', green)
-            print_text(font2, 300, 240, 'n - exit', red) 
+            print_text(font2, 250, 210, 'y - again', green)
+            print_text(font2, 250, 240, 'n - exit', red) 
             pygame.display.update()
     
         
