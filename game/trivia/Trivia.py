@@ -80,6 +80,25 @@ class Trivia(object):
         print_text(font2, 20, 270, '3 - '+self.data[self.current+3], self.colors[2])
         print_text(font2, 20, 300, '4 - '+self.data[self.current+4], self.colors[3])
         
+    def get_again(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    sys.exit()
+                elif event.type == KEYDOWN:
+                    if event.key == K_y:
+                        self.current = 0
+                        return
+                    elif event.key == K_n:
+                        sys.exit()
+            screen.fill((20,30,40))            
+
+            print_text(font1, 200, 170, 'ANSWERS',yellow)
+            print_text(font2, 300, 210, 'y - again', green)
+            print_text(font2, 300, 240, 'n - exit', red) 
+            pygame.display.update()
+    
+        
     def handle_input(self, number):
         if not self.scored and not self.failed:
             if number == self.correct:
@@ -97,7 +116,11 @@ class Trivia(object):
             self.colors = [white, white, white, white]
             self.current += 6
             if self.current >= self.total:
-                self.current = 0
+                self.get_again()
+                
+    
+                        
+            
 
 # load the Trivia data file
 trivia = Trivia('Topic.txt')
