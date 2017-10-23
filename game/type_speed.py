@@ -58,7 +58,7 @@ while True:
         print_text(font1, 500, 0, '<key>')
     if not game_over:
         print_text(font1, 0, 80, 'time:'+str(int(seconds-current)))
-    print_text(font1, 0, 100, 'speed:'+str(speed)+'letters/min')
+    print_text(font1, 0, 100, 'speed: '+str(speed)+' letters/min')
     if game_over:
         print_text(font1,0, 160, 'press enter to start')
     

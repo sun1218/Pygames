@@ -2,3 +2,5 @@
 .DS_Store
 *.wpr
 *.wpr
+game/bomb_catcher.py
+Pygames.wpr
