@@ -1,5 +1,6 @@
 import pygame, sys, random, math
 from pygame.locals import *
+
 # main program begins
 pygame.init()
 screen = pygame.display.set_mode((600, 500))
@@ -18,6 +19,7 @@ while True:
             sys.exit()
 
     angle += 1 
+    
     if angle >= 360:
         angle = 0
         r = random.randint(0, 255)
@@ -27,11 +29,9 @@ while True:
         
     x = math.cos(math.radians(angle)) * radius
     y = math.sin(math.radians(angle)) * radius 
-    
-    
     pos = (int(pos_x+x), int(pos_y+y))
-    print(pos)
-    screen.fill((0,0,0))
+    
+    # screen.fill((0,0,0))
     pygame.draw.circle(screen, color, pos, 10, 0)
     
     pygame.display.update()
