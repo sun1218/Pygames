@@ -1,10 +1,8 @@
-# Block Breaker Game
-# Chapter 9
-
+# 导入模块
 import sys, time, random, math, pygame
 from pygame.locals import *
 from library import *
-
+# 创建‘关卡集’信息
 levels = (
 (1,1,1,1,1,1,1,1,1,1,1,1, 
  1,1,1,1,1,1,1,1,1,1,1,1, 
@@ -43,16 +41,16 @@ levels = (
 #this function increments the level
 def goto_next_level():
     global level, levels
-    level += 1
-    if level > len(levels)-1: level = 0
-    load_level()
+    level += 1 # ‘关卡数’计入下一个关卡
+    if level > len(levels)-1: level = 0 # 重新开始关卡集
+    load_level() # 加载新的关卡的有关信息
 
 #this function updates the blocks in play
 def update_blocks():
     global block_group, waiting
-    if len(block_group) == 0: #all blocks gone?
-        goto_next_level()
-        waiting = True
+    if len(block_group) == 0: # 所有的'block'是否都被击碎
+        goto_next_level() # 进入下一关
+        waiting = True # 将球重新放在‘挡板’上
     block_group.update(ticks, 50)
         
 #this function sets up the blocks for the level
@@ -61,7 +59,7 @@ def load_level():
     block_group.empty() #reset block group
     
     for bx in range(0, 12):
-        for by in range(0,10):
+        for by in range(0,10): # 放置每一个‘block’
             block = Sprite()
             block.load('blocks.png', 58, 28, 4)
             x = 40 + bx * (block.frame_width+1)
@@ -69,17 +67,17 @@ def load_level():
             block.position = x,y
 
             #read blocks from level data
-            num = levels[level][by*12+bx]
+            num = levels[level][by*12+bx] # 获得图片的第几个 
             block.first_frame = num-1
             block.last_frame = num-1
-            if num > 0: #0 is blank
+            if num > 0: # 如果不为空
                 block_group.add(block)
 
-    print(len(block_group))
+    print(len(block_group)) # 输出还有多少个‘block’
 
     
 #this function initializes the game
-def game_init():
+def game_init(): # 初始化
     global screen, font, timer
     global paddle_group, block_group, ball_group
     global paddle, block_image, block, ball
@@ -111,41 +109,45 @@ def game_init():
 
 
 #this function moves the paddle
-def move_paddle():
+def move_paddle(): # 移动‘挡板’ 
     global movex,movey,keys,waiting
 
     paddle_group.update(ticks, 50)
 
     if keys[K_SPACE]:
-        if waiting:
-            waiting = False
+        if waiting: # 球放在‘挡板’上
+            waiting = False # 让球起飞
             reset_ball()
     elif keys[K_LEFT]: paddle.velocity.x = -10.0
     elif keys[K_RIGHT]: paddle.velocity.x = 10.0
-    else:
+    else: # 跟随鼠标的'x'轴
         if movex < -2: paddle.velocity.x = movex
         elif movex > 2: paddle.velocity.x = movex
         else: paddle.velocity.x = 0
     
-    paddle.x += paddle.velocity.x
+    paddle.x += paddle.velocity.x # 移动
+    # 出界检查
     if paddle.x < 0: paddle.x = 0
     elif paddle.x > 710: paddle.x = 710
 
 #this function resets the ball's velocity
 def reset_ball():
-    ball.velocity = Point(4.5, -7.0)
+    ball.velocity = Point(4.5, -7.0) # 让球获得速度
 
 #this function moves the ball
-def move_ball():
+def move_ball(): # 移动球
     global waiting, ball, game_over, lives
 
     #move the ball            
-    ball_group.update(ticks, 50)
-    if waiting:
+    ball_group.update(ticks, 50) # 刷新球的位置
+    if waiting: # 如果‘球’在挡板上
+        # 跟随‘挡板’
         ball.x = paddle.x + 40
         ball.y = paddle.y - 20
+    # 移动球    
     ball.x += ball.velocity.x
     ball.y += ball.velocity.y
+    # 出界，则移动方向取反
     if ball.x < 0:
         ball.x = 0
         ball.velocity.x *= -1
