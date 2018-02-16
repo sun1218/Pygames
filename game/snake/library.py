@@ -1,33 +1,17 @@
-import pygame
-# Class
-# class Point
-class Point(object):
-    def __init__(self, x, y):
-        self.__x = x
-        self.__y = y
+# MyLibrary.py
 
-    # X property
-    def getx(self): 
-        return self.__x
-    
-    def setx(self, x):
-        self.__x = x
-    x = property(getx, setx)
-
-    # Y property
-    def gety(self): 
-        return self.__y
-
-    def sety(self, y): 
-        self.__y = y
-    y = property(gety, sety)
+import sys, time, random, math, pygame
+from pygame.locals import *
 
 
-    def __str__(self):
-        return "{X:"  +  "{:.0f}".format(self.__x)  +  \
-            ", Y:"  +  "{:.0f}".format(self.__y)  +  "}"
+# prints text using the supplied font
+def print_text(font, x, y, text, color=(255, 255, 255)):
+    imgText = font.render(text, True, color)
+    screen = pygame.display.get_surface()  # req'd when function moved into MyLibrary
+    screen.blit(imgText, (x, y))
 
-# class Sprite
+
+# Sprite class extends pygame.sprite.Sprite
 class Sprite(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)  # extend the base Sprite class
@@ -103,7 +87,7 @@ class Sprite(pygame.sprite.Sprite):
         if self.frame != self.old_frame:
             frame_x = (self.frame % self.columns) * self.frame_width
             frame_y = (self.frame // self.columns) * self.frame_height
-            rect = pygame.Rect(frame_x, frame_y, self.frame_width, self.frame_height)
+            rect = Rect(frame_x, frame_y, self.frame_width, self.frame_height)
             self.image = self.master_image.subsurface(rect)
             self.old_frame = self.frame
 
@@ -114,10 +98,27 @@ class Sprite(pygame.sprite.Sprite):
                "," + str(self.rect)
 
 
+# Point class
+class Point(object):
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
 
-# Def
-# def print_text
-def print_text(font,screen,x, y, text, color=(255, 255, 255)):
-    imgText = font.render(text, True, color)
-    screen.blit(imgText, (x, y))
-    
+    # X property
+    def getx(self): return self.__x
+
+    def setx(self, x): self.__x = x
+
+    x = property(getx, setx)
+
+    # Y property
+    def gety(self): return self.__y
+
+    def sety(self, y): self.__y = y
+
+    y = property(gety, sety)
+
+    def __str__(self):
+        return "{X:" + "{:.0f}".format(self.__x) + \
+               ",Y:" + "{:.0f}".format(self.__y) + "}"
+

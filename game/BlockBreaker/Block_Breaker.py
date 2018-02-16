@@ -160,7 +160,7 @@ def move_ball(): # 移动球
     elif ball.y > 580: #missed paddle
         waiting = True
         lives -= 1
-        if lives < 1: game_over = True
+        # if lives < 1: game_over = True
 
 #this function test for collision between ball and paddle
 def collision_ball_paddle():
